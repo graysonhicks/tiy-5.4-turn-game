@@ -1,0 +1,36 @@
+$maingreen: #009545
+$bordergreen: #007637
+$lightgreen: #3AB874
+$darkgreen: #005427
+
+$mainred: #D32F00
+
+$mainblue: #005786
+
+
+.enemy-image
+  color: $mainred
+
+.hero-image
+  color: $mainblue
+
+.enemy-image,
+.hero-image
+  font-size: 200px
+
+.attack-button
+  margin: 0 auto
+  background-color: $maingreen
+  border-color: $bordergreen
+  &:hover
+    background-color: $darkgreen
+    border-color: $bordergreen
+  &:active,
+  &:focus,
+  &:visited,
+    background-color: $lightgreen
+    border-color: $bordergreen
+  &:active:focus,
+  &:active:hover,
+    background-color: $lightgreen
+    border-color: $bordergreen
