@@ -1,34 +1,35 @@
 var $ = require('jquery');
 var handlebars = require('handlebars');
 var _ = require('underscore');
-var characters = require('./characters.js');
+var models = require('./models.js');
 var views = require('./views.js');
-console.log(views);
 
-var enemiesArray = characters.enemies;
-var heroesArray = characters.heroes;
+var enemiesArray = models.enemies;
+var heroesArray = models.heroes;
 
-bindButton();
+
 
 // EVENT HANDLERS
 $('.random-battle-button').on('click', randomBattleBuilder.bind(null, enemiesArray, heroesArray));
 
-$('.attack-button').click(function(){
-    $(this).trigger('hero-attack');
-    console.log("attack!");
-});
+
+$(document).on('bind-button', bindButton);
 
 function bindButton(){
-  $('.attack-button').bind('hero-attack', heroAttack);
-  console.log('bind');
-}
+    $('.attack-button').bind('hero-attack', heroAttack);
+    $('.attack-button').on('click', function(){
+      $(this).trigger('hero-attack');
+    });
+    console.log('bind');
+  }
 
 function unbindButton(){
-  $('.attack-button').unbind('hero-attack');
-}
+    $('.attack-button').unbind('hero-attack');
+  }
+
 
 function randomBattleBuilder(enemiesArray, heroesArray){
-  console.log('click');
+
   var randomEnemy = _.sample(enemiesArray);
   var randomHero = _.sample(heroesArray);
   var view = new views.BuildBattleView();
@@ -46,8 +47,6 @@ HeroMaker.prototype.attack = function(){
 
 };
 
-
-
 function EnemyMaker(config){
   this.name = config.name;
   this.hp = config.hp;
@@ -58,34 +57,17 @@ function EnemyMaker(config){
 function heroAttack(){ //could receive a enemy object
   unbindButton();
   console.log("attack");
-  var enemyHealthContainer = $('.enemy-health');
-  var enemyNotifications = $('.enemy-notifications');
-  var enemyNotificationsListLength = $('.enemy-notifications li').length;
-  var currentDamage = calculateDamage();
-  var currentEnemyHealth = function(){
-    return enemyHealthContainer.html();
-  };
-  currentEnemyHealth = (currentEnemyHealth() - currentDamage);
-  enemyHealthContainer.html(currentEnemyHealth);
-  enemyNotifications.append("<li class='list-group-item'>You did " + currentDamage + " damage!</li>");
+  views.ShowEnemyDamage();
   setTimeout(enemyAttack, 2000);
 }
 
 function enemyAttack(){
-  var heroHealthContainer = $('.hero-health');
-  var currentHeroHealth = function(){
-    return heroHealthContainer.html();
-  };
-  var currentDamage = calculateDamage();
-  currentHeroHealth = (currentHeroHealth() - currentDamage);
-  showHeroDamage();
-  heroHealthContainer.html(currentHeroHealth);
+  views.ShowHeroDamage();
   bindButton();
 }
 
-function calculateDamage(attackPower){ //make this a method on both prototypes
-  attackPower = 1.2;
-  var damageAmount = Math.floor(_.random(1, 10) * attackPower);
-  // this.health should be updated here
-  return damageAmount;
-}
+
+
+module.exports = {
+  "heroAttack": heroAttack
+};

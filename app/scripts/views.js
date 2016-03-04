@@ -2,6 +2,8 @@ var $ = require('jquery');
 var handlebars = require('handlebars');
 var _ = require('underscore');
 
+
+
 function StartGameView(){}
 
 StartGameView.prototype.startGame = function(){
@@ -15,8 +17,6 @@ StartGameView.prototype.startGame = function(){
 function BuildBattleView(){}
 
 BuildBattleView.prototype.buildBattle = function(enemy, hero){
-  console.log("view enemy:", enemy);
-  console.log("view hero", hero);
   var battleViewSource = $("#battle-screen-template").html();
   var battleViewTemplate = handlebars.compile(battleViewSource);
   var battleViewRenderedTemplate = battleViewTemplate({
@@ -25,21 +25,60 @@ BuildBattleView.prototype.buildBattle = function(enemy, hero){
   });
 
   $('.main-content').html(battleViewRenderedTemplate);
+  $(document).trigger("bind-button");
 };
 
+function calculateDamage(attackPower){ //make this a method on both prototypes
+  attackPower = 1.2;
+  var damageAmount = Math.floor(_.random(1, 10) * attackPower);
+  // this.health should be updated here
+  return damageAmount;
+}
 
 function ShowHeroDamage(){
+  var heroHealthContainer = $('.hero-health');
+  var currentHeroHealth = function(){
+    return heroHealthContainer.html();
+  };
+  var currentDamage = calculateDamage();
+  currentHeroHealth = (currentHeroHealth() - currentDamage);
+
   var heroNotifications = $('.hero-notifications');
   var heroNotificationsListLength = $('.hero-notifications li').length;
+
   if(heroNotificationsListLength < 3) {
-    heroNotifications.append("<li class='list-group-item'>The enemy did " + 6 + " damage to you!</li>");
+    heroNotifications.append("<li class='list-group-item'>The enemy did " + currentDamage + " damage to you!</li>");
   } else {
     $('.hero-notifications li').first().remove();
-    heroNotifications.append("<li class='list-group-item'>The enemy did " + 8 + " damage to you!</li>");
+    heroNotifications.append("<li class='list-group-item'>The enemy did " + currentDamage + " damage to you!</li>");
   }
+
+  heroHealthContainer.html(currentHeroHealth);
+}
+
+function ShowEnemyDamage(){
+  var enemyHealthContainer = $('.enemy-health');
+  var currentEnemyHealth = function(){
+    return enemyHealthContainer.html();
+  };
+  var currentDamage = calculateDamage();
+  currentEnemyHealth = (currentEnemyHealth() - currentDamage);
+
+  var enemyNotifications = $('.enemy-notifications');
+  var enemyNotificationsListLength = $('.enemy-notifications li').length;
+
+  if(enemyNotificationsListLength < 3) {
+    enemyNotifications.append("<li class='list-group-item'>You did " + currentDamage + " to the enemy!</li>");
+  } else {
+    $('.enemy-notifications li').first().remove();
+    enemyNotifications.append("<li class='list-group-item'>You did " + currentDamage + " to the enemy!</li>");
+  }
+
+  enemyHealthContainer.html(currentEnemyHealth);
 }
 
 module.exports = {
+  "ShowEnemyDamage": ShowEnemyDamage,
   "ShowHeroDamage": ShowHeroDamage,
   "StartGameView": StartGameView,
   "BuildBattleView": BuildBattleView
