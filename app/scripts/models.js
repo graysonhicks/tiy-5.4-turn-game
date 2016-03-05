@@ -1,3 +1,5 @@
+var $ = require('jquery');
+var handlebars = require('handlebars');
 var _ = require('underscore');
 
 /*function HeroMaker(config){
@@ -26,7 +28,53 @@ function Enemy(params){
   _.extend(this, params);
 }
 
-//Hero.prototype.calculateDamage = function(){}
+Enemy.prototype.isDead = function(){
+  if(this.hp > 0){
+    console.log("not dead");
+    return false;
+  } else {
+    console.log("dead");
+    return true;
+  }
+};
+
+Hero.prototype.isDead = function(){
+  if(this.hp > 0){
+    console.log("not dead");
+    return false;
+  } else {
+    console.log("dead");
+    return true;
+  }
+};
+
+Hero.prototype.calculateDamage = function(enemy){ //make this a method on both prototypes
+  var attackPower = this.power;
+  var currentEnemyHealth = function(enemy){
+    return enemy.hp;
+  };
+  this.currentDamage = Math.floor(_.random(1, 10) * attackPower);
+  console.log("hero damage amount", this.currentDamage);
+  console.log("current enemy health before attack", currentEnemyHealth(enemy));
+  enemy.hp = (currentEnemyHealth(enemy) - this.currentDamage);
+  console.log("enemy hp after attack", enemy.hp);
+  // this.health should be updated here
+  return enemy.hp;
+};
+
+Enemy.prototype.calculateDamage = function(hero){ //make this a method on both prototypes
+  var attackPower = this.power;
+  var currentHeroHealth = function(hero){
+    return hero.hp;
+  };
+  this.currentDamage = Math.floor(_.random(1, 10) * attackPower);
+  console.log("enemy damage amount", this.currentDamage);
+  console.log("current hero health before attack", currentHeroHealth(hero));
+  hero.hp = (currentHeroHealth(hero) - this.currentDamage);
+  console.log("hero hp after attack", hero.hp);
+  // this.health should be updated here
+  return hero.hp;
+};
 
 var heroes = {
     "Obi Wan Kenobi": new Hero ({

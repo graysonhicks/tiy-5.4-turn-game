@@ -9,30 +9,34 @@
   <body>
     <div class="container-fluid">
       <div class="row main-content">
-        <div class="col-md-12 start-screen-container">
-          <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-              <div class="main-logo-container">
-                <img src="images/main-screen.png" alt="">
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6 col-md-offset-3 main-screen-button-rows">
-              <button type="button" class="btn btn-lg btn-block custom-battle-button">Custom Battle</button>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6 col-md-offset-3 main-screen-button-rows">
-              <button type="button" class="btn btn-lg btn-block random-battle-button">Random Battle</button>
-            </div>
-          </div>
-        </div>
-      </div>
+
     </div>
+  </div>
     <!--
     HANDLEBARS TEMPLATES
     -->
+    <!-- START SCREEN TEMPLATE -->
+    <script id="main-start-screen-template" type="text/x-handlebars-template">
+      <div class="col-md-12 start-screen-container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="main-logo-container">
+              <img src="images/main-logo.png" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3 main-screen-button-rows">
+            <button type="button" class="btn btn-lg btn-block custom-battle-button">Custom Battle</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3 main-screen-button-rows">
+            <button type="button" class="btn btn-lg btn-block random-battle-button">Random Battle</button>
+          </div>
+        </div>
+      </div>
+    </script>
       <!-- BATTLE TEMPLATE -->
       <script id="battle-screen-template" type="text/x-handlebars-template">
         <div class="col-md-6">
@@ -85,10 +89,62 @@
           </div>
         </div>
       </script>
-
-    <script id="main-start-screen-template" type="text/x-handlebars-template">
-
+    <!--
+    LOSS SCREEN TEMPLATE
+     -->
+    <script id="loss-screen-template" type="text/x-handlebars-template">
+      <div class="col-md-12 loss-screen-container">
+        <div class="row loss-heading">
+          <h2>Sorry {{hero.name}}, you have been defeated!</h2>
+          <h4>{{enemy.name}} is the ruler of the galaxy!</h4>
+        </div>
+        <div class="row victory-player">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default">
+              <div class="panel-heading enemy-name-container">
+                <h3 class="panel-title enemy-name">{{hero.name}}</h3>
+              </div>
+              <div class="panel-body">
+                <div class="enemy-image">
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                </div>
+              </div>
+            </div>
+          <button type="button" class="btn btn-lg btn-block main-menu-button">Main Menu</button>
+          </div>
+        </div>
+      </div>
     </script>
+
+  <!--
+  VICTORY SCREEN TEMPLATE
+-->
+    <script id="victory-screen-template" type="text/x-handlebars-template">
+      <div class="col-md-12 victory-screen-container">
+        <div class="row victory-heading">
+          <h2>Congrats {{hero.name}}, you win!</h2>
+          <h4>Take that {{enemy.name}}!</h4>
+        </div>
+        <div class="row victory-player">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default">
+              <div class="panel-heading hero-name-container">
+                <h3 class="panel-title hero-name">{{hero.name}}</h3>
+              </div>
+              <div class="panel-body">
+                <div class="hero-image">
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                </div>
+              </div>
+            </div>
+          <button type="button" class="btn btn-lg btn-block main-menu-button">Main Menu</button>
+          </div>
+        </div>
+      </div>
+    </script>
+    <!--
+    CHARACTER SCREEN TEMPLATE
+  -->
     <script id="character-screen-template" type="text/x-handlebars-template">
         <h3 class="character-screen-header">Choose Your Character!</h3>
         <div class="col-md-6 enemies-choice-list">
