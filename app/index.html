@@ -37,7 +37,9 @@
         </div>
       </div>
     </script>
-      <!-- BATTLE TEMPLATE -->
+      <!--
+      BATTLE TEMPLATE
+     -->
       <script id="battle-screen-template" type="text/x-handlebars-template">
         <div class="col-md-6">
           <div class="panel panel-default">
@@ -46,7 +48,7 @@
             </div>
             <div class="panel-body">
               <div class="hero-image">
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                  <img src="{{hero.avatar}}" alt="">
               </div>
               <hr>
               <div class="hero-content">
@@ -71,7 +73,7 @@
             </div>
             <div class="panel-body">
               <div class="enemy-image">
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <img src="{{enemy.avatar}}" alt="">
               </div>
               <hr>
               <div class="enemy-content">
@@ -87,8 +89,121 @@
               </div>
             </div>
           </div>
+          <button type="button" class="btn btn-primary btn-lg quit-game-button pull-right">Quit Game</button>
         </div>
       </script>
+        <!--
+        CHARACTER SCREEN TEMPLATE
+      -->
+        <script id="character-screen-template" type="text/x-handlebars-template">
+            <h3 class="character-screen-header">Choose Your Character!</h3>
+            <div class="col-md-6 enemies-choice-list character-list">
+              <h3 class="enemies-heading">Villians</h3>
+              <ul class="list-group list-inline">
+                {{#each enemies}}
+                <li class="list-group-item character-list-items character-choice" id="{{id}}">
+                  <div class="panel panel-default">
+                    <div class="panel-heading enemy-name-container">
+                      <h3 class="panel-title enemy-name">{{name}}</span></h3>
+                    </div>
+                    <div class="panel-body">
+                      <div class="enemy-image">
+                        <img src="{{avatar}}" alt="">
+                      </div>
+                      <hr>
+                      <div class="enemy-content">
+                        <ul class="list-group enemy-health-bar">
+                          <li class="list-group-item">
+                            <span class="badge enemy-health">{{hp}}</span>
+                            Health Points
+                          </li>
+                          <li class="list-group-item">
+                            <span class="badge enemy-health">{{power}}</span>
+                            Power Multiplier
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  {{/each}}
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6 heroes-choice-list character-list">
+              <h3 class="heroes-heading">Heroes</h3>
+              <ul class="list-group list-inline">
+                {{#each heroes}}
+                <li class="list-group-item character-list-items character-choice" id="{{id}}">
+                  <div class="panel panel-default">
+                    <div class="panel-heading hero-name-container">
+                      <h3 class="panel-title hero-name">{{name}}</h3>
+                    </div>
+                    <div class="panel-body">
+                      <div class="hero-image">
+                        <img src="{{avatar}}" alt="">
+                      </div>
+                      <hr>
+                      <div class="enemy-content">
+                        <ul class="list-group hero-health-bar">
+                          <li class="list-group-item">
+                            <span class="badge hero-health">{{hp}}</span>
+                            Health Points
+                          </li>
+                          <li class="list-group-item">
+                            <span class="badge hero-health">{{power}}</span>
+                            Power Multiplier
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                {{/each}}
+              </ul>
+            </div>
+        </script>
+        <!--
+        CONFIRM SCREEN
+       -->
+        <script id="confirm-screen-template" type="text/x-handlebars-template">
+          <h3 class="character-screen-header">Confirm Your Character!</h3>
+          <div class="col-md-6 col-md-offset-3 heroes-choice-list character-list">
+            <h3 class="heroes-heading">Your Character</h3>
+            <ul class="list-group list-inline">
+              <li class="list-group-item back-button-container">
+                <button type="button" class="btn btn-primary btn-lg back-button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Go Back</button>
+              </li>
+              <li class="list-group-item character-list-items character-choice" id="{{hero.id}}">
+                <div class="panel panel-default">
+                  <div class="panel-heading hero-name-container">
+                    <h3 class="panel-title hero-name">{{hero.name}}<span class='glyphicon glyphicon-ok checkmark' aria-hidden='true'></span></h3>
+                  </div>
+                  <div class="panel-body">
+                    <div class="hero-image">
+                        <img src="{{hero.avatar}}" alt="">
+                    </div>
+                    <hr>
+                    <div class="hero-content">
+                      <ul class="list-group hero-health-bar">
+                        <li class="list-group-item">
+                          <span class="badge hero-health">{{hero.hp}}</span>
+                          Health Points
+                        </li>
+                        <li class="list-group-item">
+                          <span class="badge hero-health">{{hero.power}}</span>
+                          Power Multiplier
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item confirm-button-container">
+                <button type="button" class="btn btn-primary btn-lg confirm-button">Confirm <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
+              </li>
+            </ul>
+          </div>
+        </script>
     <!--
     LOSS SCREEN TEMPLATE
      -->
@@ -106,7 +221,7 @@
               </div>
               <div class="panel-body">
                 <div class="enemy-image">
-                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                  <img src="{{enemy.avatar}}" alt="">
                 </div>
               </div>
             </div>
@@ -133,7 +248,7 @@
               </div>
               <div class="panel-body">
                 <div class="hero-image">
-                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                  <img src="{{hero.avatar}}" alt="">
                 </div>
               </div>
             </div>
@@ -142,76 +257,7 @@
         </div>
       </div>
     </script>
-    <!--
-    CHARACTER SCREEN TEMPLATE
-  -->
-    <script id="character-screen-template" type="text/x-handlebars-template">
-        <h3 class="character-screen-header">Choose Your Character!</h3>
-        <div class="col-md-6 enemies-choice-list">
-          <h3 class="enemies-heading">Villians</h3>
-          <ul class="list-group list-inline">
-            {{#each enemies}}
-            <li class="list-group-item character-list-items">
-              <div class="panel panel-default">
-                <div class="panel-heading enemy-name-container">
-                  <h3 class="panel-title enemy-name">{{name}}</h3>
-                </div>
-                <div class="panel-body">
-                  <div class="enemy-image">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                  </div>
-                  <hr>
-                  <div class="enemy-content">
-                    <ul class="list-group enemy-health-bar">
-                      <li class="list-group-item">
-                        <span class="badge enemy-health">{{hp}}</span>
-                        Health Points
-                      </li>
-                      <li class="list-group-item">
-                        <span class="badge enemy-health">{{power}}</span>
-                        Power Multiplier
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </li>
-              {{/each}}
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-6 heroes-choice-list">
-          <h3 class="heroes-heading">Heroes</h3>
-          <ul class="list-group list-inline">
-            {{#each heroes}}
-            <li class="list-group-item character-list-items">
-              <div class="panel panel-default">
-                <div class="panel-heading hero-name-container">
-                  <h3 class="panel-title hero-name">{{name}}</h3>
-                </div>
-                <div class="panel-body">
-                  <div class="hero-image">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                  </div>
-                  <hr>
-                  <div class="enemy-content">
-                    <ul class="list-group hero-health-bar">
-                      <li class="list-group-item">
-                        <span class="badge hero-health">{{hp}}</span>
-                        Health Points
-                      </li>
-                      <li class="list-group-item">
-                        <span class="badge hero-health">{{power}}</span>
-                        Power Multiplier
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </li>
-            {{/each}}
-          </ul>
-        </div>
-    </script>
+
     <script src="js/bundle.js"></script>
   </body>
 </html>

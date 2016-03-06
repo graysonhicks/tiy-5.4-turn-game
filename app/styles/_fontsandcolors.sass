@@ -5,11 +5,44 @@ $darkgreen: #005427
 
 $mainred: #D32F00
 $lightred: #FA4F1E
+$darkred: #821D00
+$borderred: #AC2700
 $mainyellow: #ffea20
 $mainblue: #005786
 $lightblue: #006DA8
 
+$gray: #434647
+
+@mixin buttonHoverClick
+  transition: all .2s ease-in-out
+  &:hover
+    box-shadow: 2px 2px 2px $gray
+    transform: scale(1.01)
+  &:active
+    transform: scale(.98)
+
+@mixin buttonStyle($main, $dark, $light, $border)
+  background-color: $main
+  border-color: $border
+  &:hover
+    background-color: $dark
+    border-color: $border
+  &:active,
+  &:focus,
+  &:visited,
+    background-color: $light
+    border-color: $border
+  &:active:focus,
+  &:active:hover,
+    background-color: $light
+    border-color: $border
+
+
 // START SCREEN
+
+.custom-battle-button,
+.random-battle-button
+  @include buttonHoverClick
 
 // CHARACTER SCREEN
 
@@ -19,6 +52,21 @@ $lightblue: #006DA8
 .loss-heading,
 .victory-heading
   color: $mainyellow
+
+.character-choice
+  @include buttonHoverClick
+
+.checkmark
+  color: $maingreen
+
+// CONFIRM SCREEN
+
+.confirm-button
+  @include buttonStyle($maingreen, $darkgreen, $lightgreen, $bordergreen)
+  @include buttonHoverClick
+
+.back-button
+  @include buttonHoverClick
 
 .main-content
   background-image: url("../images/bg.jpg")
@@ -33,19 +81,11 @@ $lightblue: #006DA8
 .hero-image
   font-size: 175px
 
+.quit-game-button
+  @include buttonHoverClick
+  @include buttonStyle($mainred, $darkred, $lightred, $borderred)
+
 .attack-button
   margin: 0 auto
-  background-color: $maingreen
-  border-color: $bordergreen
-  &:hover
-    background-color: $darkgreen
-    border-color: $bordergreen
-  &:active,
-  &:focus,
-  &:visited,
-    background-color: $lightgreen
-    border-color: $bordergreen
-  &:active:focus,
-  &:active:hover,
-    background-color: $lightgreen
-    border-color: $bordergreen
+  @include buttonHoverClick
+  @include buttonStyle($maingreen, $darkgreen, $lightgreen, $bordergreen)

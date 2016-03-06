@@ -11,16 +11,60 @@
 .character-screen-header
   text-align: center
 
+.hero-image
+  img
+    height: 200px
+    width: 200px
+
+.enemy-image
+  img
+    height: 200px
+    width: 200px
+
 .enemies-heading
   text-align: center
 
 .heroes-heading
   text-align: center
 
-li.list-group-item.character-list-items
+.character-choice
   width: 45%
   margin-bottom: 5px
   border-radius: 5px
+  margin-left: 20px
+  cursor: pointer
+
+.checkmark
+  padding-left: 15px
+
+// CONFIRM SCREEN
+
+.confirm-button-container,
+.back-button-container
+  position: relative
+  bottom: 200px
+  background-color: transparent
+  border: none
+
+.confirm-button-container
+  left: 50px
+
+.back-button-container
+  right: 35px
+
+.back-button
+  span
+    padding-right: 5px
+
+.confirm-button
+  span
+    padding-left: 5px
+
+// ENEMY SCREEN
+
+.chosen-already
+  pointer-events: none
+  opacity: .4
 
 //BATTLE SCREEN
 
