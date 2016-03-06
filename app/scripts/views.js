@@ -49,6 +49,7 @@ BuildBattleView.prototype.showEnemyDamage = function (hero, enemy){
 
   flashDamage('.enemy-notifications li', "#006DA8");
   $('.enemy-image').effect("shake");
+  $('.enemy-health').css('width', enemy.hp+'%').attr('aria-valuenow', enemy.hp); 
   enemyHealthContainer.html(enemy.hp);
 };
 
@@ -62,6 +63,7 @@ BuildBattleView.prototype.showHeroDamage = function (hero, enemy){
 
   flashDamage('.hero-notifications li', "#FA4F1E");
   $('.hero-image').effect("shake");
+  $('.hero-health').css('width', hero.hp+'%').attr('aria-valuenow', hero.hp);
   heroHealthContainer.html(hero.hp);
 };
 

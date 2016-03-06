@@ -8,8 +8,13 @@ $lightred: #FA4F1E
 $darkred: #821D00
 $borderred: #AC2700
 $mainyellow: #ffea20
+$darkyellow: #A99900
+$lightyellow:#FFEE4B
+$borderyellow:#D7C201
 $mainblue: #005786
 $lightblue: #006DA8
+$darkblue: #00314B
+$borderblue: #00456A
 
 $gray: #434647
 
@@ -68,6 +73,8 @@ $gray: #434647
 .back-button
   @include buttonHoverClick
 
+// BATTLE SCREEN
+
 .main-content
   background-image: url("../images/bg.jpg")
 
@@ -81,9 +88,23 @@ $gray: #434647
 .hero-image
   font-size: 175px
 
+div.progress-bar.progress-bar-danger.enemy-health.enemy-battle-health,
+div.progress-bar.progress-bar-info.hero-health.hero-battle-health
+  border-radius: 5px
+
 .quit-game-button
   @include buttonHoverClick
   @include buttonStyle($mainred, $darkred, $lightred, $borderred)
+
+.power-button
+  @include buttonHoverClick
+  @include buttonStyle($darkyellow, $borderyellow, $lightyellow, $borderyellow)
+  color: white
+  border: none
+
+.hp-button
+  @include buttonHoverClick
+  @include buttonStyle($mainblue, $darkblue, $lightblue, $borderblue)
 
 .attack-button
   margin: 0 auto

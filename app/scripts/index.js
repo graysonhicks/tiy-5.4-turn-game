@@ -32,6 +32,14 @@ function bindButton(){
     $('.attack-button').on('click', function(){ // this bind is bound and unbound when attack is clicked
       $(this).trigger('hero-attack'); // this keeps player from clicking attack over and over
     });
+    $('.power-button').bind('powerattack', specialAttack);
+    $('.power-button').on('click', function(){
+      $(this).trigger('powerattack');
+    });
+    $('.quit-game-button').on('click', function(){
+      var view = new views.StartGameView();
+      view.resetGame();
+    });
     console.log('bind');
   }
 
@@ -113,6 +121,27 @@ function enemyAttack(){
       view.showPreLoss(hero, enemy); // play animations
     }
   bindButton(); // bind button again so attack may be pressed
+}
+
+
+function specialAttack(){
+  var view = new views.BuildBattleView();
+  var hero = game.hero;
+  var enemy = game.enemy;
+  unbindButton();
+  hero.specialAttack(enemy);
+  view.showEnemyDamage(hero, enemy);
+  var deadTest = enemy.isDead(); //see if enemy is dead
+  if(deadTest === true){
+    view.showPreVictory(hero, enemy); //if dead play animation
+  }
+  $('.power-button').addClass('chosen-already');
+  $('.power-button').prop('disabled', 'disabled');
+  setTimeout(enemyAttack, 2000); // else have enemy attack in 2 seconds
+}
+
+function healthBoost(){
+
 }
 
 //listen for character screen trigger

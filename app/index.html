@@ -41,55 +41,60 @@
       BATTLE TEMPLATE
      -->
       <script id="battle-screen-template" type="text/x-handlebars-template">
-        <div class="col-md-6">
-          <div class="panel panel-default">
-            <div class="panel-heading hero-name-container">
-              <h3 class="panel-title hero-name">{{hero.name}}</h3>
-            </div>
-            <div class="panel-body">
-              <div class="hero-image">
-                  <img src="{{hero.avatar}}" alt="">
-              </div>
-              <hr>
-              <div class="hero-content">
-                <ul class="list-group hero-health-bar">
-                  <li class="list-group-item">
-                    <span class="badge hero-health">{{hero.hp}}</span>
-                    Health Points
-                  </li>
-                </ul>
-                <ul class="list-group hero-notifications">
-
-                </ul>
-              </div>
-            </div>
-          </div>
-          <button type="button" class="btn btn-lg btn-block btn-primary attack-button">Attack!</button>
+        <div class="row">
+          <img class="battle-logo center-block" src="images/main-logo.png" alt="">
         </div>
-        <div class="col-md-6">
-          <div class="panel panel-default">
-            <div class="panel-heading enemy-name-container">
-              <h3 class="panel-title enemy-name">{{enemy.name}}</h3>
-            </div>
-            <div class="panel-body">
-              <div class="enemy-image">
-                <img src="{{enemy.avatar}}" alt="">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading hero-name-container">
+                <h3 class="panel-title hero-name">{{hero.name}}</h3>
               </div>
-              <hr>
-              <div class="enemy-content">
-                <ul class="list-group enemy-health-bar">
-                  <li class="list-group-item">
-                    <span class="badge enemy-health">{{enemy.hp}}</span>
-                    Health Points
-                  </li>
-                </ul>
-                <ul class="list-group enemy-notifications">
+              <div class="panel-body">
+                <div class="hero-image">
+                    <img src="{{hero.avatar}}" alt="">
+                </div>
 
-                </ul>
+                <div class="progress-bar progress-bar-info hero-health hero-battle-health" role="progressbar" aria-valuenow="{{hero.hp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{hero.hp}}%">
+                  <span>{{hero.hp}} HP</span>
+                </div>
+
+                <div class="hero-content battle-hero-content">
+                  <ul class="list-group hero-notifications">
+
+                  </ul>
+                </div>
               </div>
+            </div>
+            <button type="button" class="btn btn-lg btn-block btn-primary attack-button">Attack!</button>
+            <div class="power-and-health-button-container">
+              <button type="button" class="btn btn-lg btn-info hp-button">Use HP Boost!</button>
+              <button type="button" class="btn btn-lg btn-danger power-button">Use Power Boost!</button>
             </div>
           </div>
-          <button type="button" class="btn btn-primary btn-lg quit-game-button pull-right">Quit Game</button>
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading enemy-name-container">
+                <h3 class="panel-title enemy-name">{{enemy.name}}</h3>
+              </div>
+              <div class="panel-body">
+                <div class="enemy-image">
+                  <img src="{{enemy.avatar}}" alt="">
+
+                </div>
+                <div class="progress-bar progress-bar-danger enemy-health enemy-battle-health" role="progressbar" aria-valuenow="{{enemy.hp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{enemy.hp}}%">
+                  <span>{{enemy.hp}} HP</span>
+                </div>
+
+                <div class="enemy-content battle-enemy-content">
+                  <ul class="list-group enemy-notifications">
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-lg quit-game-button pull-right">Quit Game</button>
+          </div>
         </div>
       </script>
         <!--
@@ -113,14 +118,26 @@
                       <hr>
                       <div class="enemy-content">
                         <ul class="list-group enemy-health-bar">
-                          <li class="list-group-item">
-                            <span class="badge enemy-health">{{hp}}</span>
-                            Health Points
-                          </li>
-                          <li class="list-group-item">
-                            <span class="badge enemy-health">{{power}}</span>
-                            Power Multiplier
-                          </li>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{hp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{hp}}%">
+                              <span>{{hp}} HP</span>
+                            </div>
+                          </div>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{power}}" aria-valuemin="0" aria-valuemax="100" style="width: {{power}}%">
+                              <span>{{power}} Power</span>
+                            </div>
+                          </div>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{boostHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{boostHp}}%">
+                              <span>{{boostHp}} HP Booster</span>
+                            </div>
+                          </div>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{boostPower}}" aria-valuemin="0" aria-valuemax="100" style="width: {{boostPower}}%">
+                              <span>{{boostPower}} Power Booster</span>
+                            </div>
+                          </div>
                         </ul>
                       </div>
                     </div>
@@ -145,14 +162,25 @@
                       <hr>
                       <div class="enemy-content">
                         <ul class="list-group hero-health-bar">
-                          <li class="list-group-item">
-                            <span class="badge hero-health">{{hp}}</span>
-                            Health Points
-                          </li>
-                          <li class="list-group-item">
-                            <span class="badge hero-health">{{power}}</span>
-                            Power Multiplier
-                          </li>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{hp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{hp}}%">
+                              <span>{{hp}} HP</span>
+                            </div>
+                          </div>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{power}}" aria-valuemin="0" aria-valuemax="100" style="width: {{power}}%">
+                              <span>{{power}} Power</span>
+                            </div>
+                          </div>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{boostHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{boostHp}}%">
+                              <span>{{boostHp}} HP Booster</span>
+                            </div>
+                          </div>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{boostPower}}" aria-valuemin="0" aria-valuemax="100" style="width: {{boostPower}}%">
+                              <span>{{boostPower}} Power Booster</span>
+                            </div>
                         </ul>
                       </div>
                     </div>
@@ -185,14 +213,25 @@
                     <hr>
                     <div class="hero-content">
                       <ul class="list-group hero-health-bar">
-                        <li class="list-group-item">
-                          <span class="badge hero-health">{{hero.hp}}</span>
-                          Health Points
-                        </li>
-                        <li class="list-group-item">
-                          <span class="badge hero-health">{{hero.power}}</span>
-                          Power Multiplier
-                        </li>
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{hero.hp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{hero.hp}}%">
+                            <span>{{hero.hp}} HP</span>
+                          </div>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{hero.power}}" aria-valuemin="0" aria-valuemax="100" style="width: {{hero.power}}%">
+                            <span>{{hero.power}} Power</span>
+                          </div>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{hero.boostHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{hero.boostHp}}%">
+                            <span>{{hero.boostHp}} HP Booster</span>
+                          </div>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{hero.boostPower}}" aria-valuemin="0" aria-valuemax="100" style="width: {{hero.boostPower}}%">
+                            <span>{{hero.boostPower}} Power Booster</span>
+                          </div>
                       </ul>
                     </div>
                   </div>
