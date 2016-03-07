@@ -1,0 +1,322 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <title>5 3 turn game</title>
+    <link rel="stylesheet" href="css/app.css">
+    <audio src="sounds/health.wav" id="health-sound"></audio>
+  	<audio src="sounds/hover.ogg" id="hover-sound"></audio>
+    <audio src="sounds/laser.wav" id="laser-sound"></audio>
+    <audio src="sounds/saber.mp3" id="saber-sound"></audio>
+    <audio src="sounds/saber2.wav" id="saber2-sound"></audio>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row main-content">
+
+    </div>
+  </div>
+    <!--
+    HANDLEBARS TEMPLATES
+    -->
+    <!-- START SCREEN TEMPLATE -->
+    <script id="main-start-screen-template" type="text/x-handlebars-template">
+      <div class="col-md-12 start-screen-container">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <div class="main-logo-container">
+              <img src="images/main-logo.png" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3 main-screen-button-rows">
+            <button type="button" class="btn btn-lg btn-block custom-battle-button">Custom Battle</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3 main-screen-button-rows">
+            <button type="button" class="btn btn-lg btn-block random-battle-button">Random Battle</button>
+          </div>
+        </div>
+      </div>
+    </script>
+      <!--
+      BATTLE TEMPLATE
+     -->
+      <script id="battle-screen-template" type="text/x-handlebars-template">
+        <div class="row">
+          <img class="battle-logo center-block" src="images/main-logo.png" alt="">
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading hero-name-container">
+                <h3 class="panel-title hero-name">{{hero.name}}</h3>
+              </div>
+              <div class="panel-body">
+                <div class="hero-image">
+                    <img src="{{hero.avatar}}" alt="">
+                </div>
+
+                <div class="progress-bar progress-bar-info hero-health hero-battle-health" role="progressbar" aria-valuenow="{{hero.hp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{hero.hp}}%">
+                  <span>{{hero.hp}} HP</span>
+                </div>
+
+                <div class="hero-content battle-hero-content">
+                  <ul class="list-group hero-notifications">
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-lg btn-block btn-primary attack-button">Attack!</button>
+            <div class="power-and-health-button-container">
+              <button type="button" class="btn btn-lg btn-info hp-button">Use HP Boost!</button>
+              <button type="button" class="btn btn-lg btn-danger power-button">Use Power Boost!</button>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading enemy-name-container">
+                <h3 class="panel-title enemy-name">{{enemy.name}}</h3>
+              </div>
+              <div class="panel-body">
+                <div class="enemy-image">
+                  <img src="{{enemy.avatar}}" alt="">
+
+                </div>
+                <div class="progress-bar progress-bar-danger enemy-health enemy-battle-health" role="progressbar" aria-valuenow="{{enemy.hp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{enemy.hp}}%">
+                  <span>{{enemy.hp}} HP</span>
+                </div>
+
+                <div class="enemy-content battle-enemy-content">
+                  <ul class="list-group enemy-notifications">
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-lg quit-game-button pull-right">Quit Game</button>
+          </div>
+        </div>
+      </script>
+        <!--
+        CHARACTER SCREEN TEMPLATE
+      -->
+        <script id="character-screen-template" type="text/x-handlebars-template">
+            <div class="row">
+              <img class="battle-logo center-block" src="images/main-logo.png" alt="">
+              <h3 class="character-screen-header">Choose Your Character!</h3>
+            </div>
+            <div class="col-md-6 enemies-choice-list character-list">
+              <h3 class="enemies-heading">Villians</h3>
+              <ul class="list-group list-inline">
+                {{#each enemies}}
+                <li class="list-group-item character-list-items character-choice" id="{{id}}">
+                  <div class="panel panel-default">
+                    <div class="panel-heading enemy-name-container">
+                      <h3 class="panel-title enemy-name">{{name}}</span></h3>
+                    </div>
+                    <div class="panel-body">
+                      <div class="enemy-image">
+                        <img src="{{avatar}}" alt="">
+                      </div>
+                      <hr>
+                      <div class="enemy-content">
+                        <ul class="list-group enemy-health-bar">
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{hp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{hp}}%">
+                              <span>{{hp}} HP</span>
+                            </div>
+                          </div>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{power}}" aria-valuemin="0" aria-valuemax="100" style="width: {{power}}%">
+                              <span>{{power}} Power</span>
+                            </div>
+                          </div>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{boostHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{boostHp}}%">
+                              <span>{{boostHp}} HP Booster</span>
+                            </div>
+                          </div>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{boostPower}}" aria-valuemin="0" aria-valuemax="100" style="width: {{boostPower}}%">
+                              <span>{{boostPower}} Power Booster</span>
+                            </div>
+                          </div>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                  {{/each}}
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-6 heroes-choice-list character-list">
+              <h3 class="heroes-heading">Heroes</h3>
+              <ul class="list-group list-inline">
+                {{#each heroes}}
+                <li class="list-group-item character-list-items character-choice" id="{{id}}">
+                  <div class="panel panel-default">
+                    <div class="panel-heading hero-name-container">
+                      <h3 class="panel-title hero-name">{{name}}</h3>
+                    </div>
+                    <div class="panel-body">
+                      <div class="hero-image">
+                        <img src="{{avatar}}" alt="">
+                      </div>
+                      <hr>
+                      <div class="enemy-content">
+                        <ul class="list-group hero-health-bar">
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{hp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{hp}}%">
+                              <span>{{hp}} HP</span>
+                            </div>
+                          </div>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{power}}" aria-valuemin="0" aria-valuemax="100" style="width: {{power}}%">
+                              <span>{{power}} Power</span>
+                            </div>
+                          </div>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{boostHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{boostHp}}%">
+                              <span>{{boostHp}} HP Booster</span>
+                            </div>
+                          </div>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{boostPower}}" aria-valuemin="0" aria-valuemax="100" style="width: {{boostPower}}%">
+                              <span>{{boostPower}} Power Booster</span>
+                            </div>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                {{/each}}
+              </ul>
+            </div>
+        </script>
+        <!--
+        CONFIRM SCREEN
+       -->
+        <script id="confirm-screen-template" type="text/x-handlebars-template">
+          <div class="row">
+            <img class="battle-logo center-block" src="images/main-logo.png" alt="">
+            <h3 class="character-screen-header">Confirm Your Character!</h3>
+          </div>
+          <div class="col-md-6 col-md-offset-3 heroes-choice-list character-list">
+            <ul class="list-group list-inline">
+              <li class="list-group-item back-button-container">
+                <button type="button" class="btn btn-primary btn-lg back-button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Go Back</button>
+              </li>
+              <li class="list-group-item character-list-items character-choice" id="{{hero.id}}">
+                <div class="panel panel-default">
+                  <div class="panel-heading hero-name-container">
+                    <h3 class="panel-title hero-name">{{hero.name}}<span class='glyphicon glyphicon-ok checkmark' aria-hidden='true'></span></h3>
+                  </div>
+                  <div class="panel-body">
+                    <div class="hero-image">
+                        <img src="{{hero.avatar}}" alt="">
+                    </div>
+                    <hr>
+                    <div class="hero-content">
+                      <ul class="list-group hero-health-bar">
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{hero.hp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{hero.hp}}%">
+                            <span>{{hero.hp}} HP</span>
+                          </div>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="{{hero.power}}" aria-valuemin="0" aria-valuemax="100" style="width: {{hero.power}}%">
+                            <span>{{hero.power}} Power</span>
+                          </div>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{hero.boostHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{hero.boostHp}}%">
+                            <span>{{hero.boostHp}} HP Booster</span>
+                          </div>
+                        </div>
+                        <div class="progress">
+                          <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{hero.boostPower}}" aria-valuemin="0" aria-valuemax="100" style="width: {{hero.boostPower}}%">
+                            <span>{{hero.boostPower}} Power Booster</span>
+                          </div>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item confirm-button-container">
+                <button type="button" class="btn btn-primary btn-lg confirm-button">Confirm <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></button>
+              </li>
+            </ul>
+          </div>
+        </script>
+    <!--
+    LOSS SCREEN TEMPLATE
+     -->
+    <script id="loss-screen-template" type="text/x-handlebars-template">
+      <div class="row">
+        <img class="battle-logo center-block" src="images/main-logo.png" alt="">
+      </div>
+      <div class="row">
+        <div class="col-md-12 loss-screen-container">
+          <div class="row loss-heading">
+            <h2>Sorry {{hero.name}}, you have been defeated!</h2>
+            <h4>{{enemy.name}} is the ruler of the galaxy!</h4>
+          </div>
+          <div class="row victory-player">
+            <div class="col-md-6 col-md-offset-3">
+              <div class="panel panel-default">
+                <div class="panel-heading enemy-name-container">
+                  <h3 class="panel-title enemy-name">{{hero.name}}</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="enemy-image">
+                    <img src="{{enemy.avatar}}" alt="">
+                  </div>
+                </div>
+              </div>
+            <button type="button" class="btn btn-lg btn-block main-menu-button">Main Menu</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+  <!--
+  VICTORY SCREEN TEMPLATE
+-->
+    <script id="victory-screen-template" type="text/x-handlebars-template">
+      <div class="row">
+        <img class="battle-logo center-block" src="images/main-logo.png" alt="">
+      </div>
+      <div class="row">
+        <div class="col-md-12 victory-screen-container">
+          <div class="row victory-heading">
+            <h2>Congrats {{hero.name}}, you win!</h2>
+            <h4>Take that {{enemy.name}}!</h4>
+          </div>
+          <div class="row victory-player">
+            <div class="col-md-6 col-md-offset-3">
+              <div class="panel panel-default">
+                <div class="panel-heading hero-name-container">
+                  <h3 class="panel-title hero-name">{{hero.name}}</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="hero-image">
+                    <img src="{{hero.avatar}}" alt="">
+                  </div>
+                </div>
+              </div>
+            <button type="button" class="btn btn-lg btn-block main-menu-button">Main Menu</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script src="js/bundle.js"></script>
+  </body>
+</html>
