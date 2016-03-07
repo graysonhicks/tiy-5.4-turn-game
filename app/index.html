@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
     <title>5 3 turn game</title>
     <link rel="stylesheet" href="css/app.css">
+    <audio src="sounds/health.wav" id="health-sound"></audio>
+  	<audio src="sounds/hover.ogg" id="hover-sound"></audio>
+    <audio src="sounds/laser.wav" id="laser-sound"></audio>
+    <audio src="sounds/saber.mp3" id="saber-sound"></audio>
+    <audio src="sounds/saber2.wav" id="saber2-sound"></audio>
   </head>
   <body>
     <div class="container-fluid">
@@ -101,7 +106,10 @@
         CHARACTER SCREEN TEMPLATE
       -->
         <script id="character-screen-template" type="text/x-handlebars-template">
-            <h3 class="character-screen-header">Choose Your Character!</h3>
+            <div class="row">
+              <img class="battle-logo center-block" src="images/main-logo.png" alt="">
+              <h3 class="character-screen-header">Choose Your Character!</h3>
+            </div>
             <div class="col-md-6 enemies-choice-list character-list">
               <h3 class="enemies-heading">Villians</h3>
               <ul class="list-group list-inline">
@@ -194,9 +202,11 @@
         CONFIRM SCREEN
        -->
         <script id="confirm-screen-template" type="text/x-handlebars-template">
-          <h3 class="character-screen-header">Confirm Your Character!</h3>
+          <div class="row">
+            <img class="battle-logo center-block" src="images/main-logo.png" alt="">
+            <h3 class="character-screen-header">Confirm Your Character!</h3>
+          </div>
           <div class="col-md-6 col-md-offset-3 heroes-choice-list character-list">
-            <h3 class="heroes-heading">Your Character</h3>
             <ul class="list-group list-inline">
               <li class="list-group-item back-button-container">
                 <button type="button" class="btn btn-primary btn-lg back-button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Go Back</button>
@@ -247,24 +257,29 @@
     LOSS SCREEN TEMPLATE
      -->
     <script id="loss-screen-template" type="text/x-handlebars-template">
-      <div class="col-md-12 loss-screen-container">
-        <div class="row loss-heading">
-          <h2>Sorry {{hero.name}}, you have been defeated!</h2>
-          <h4>{{enemy.name}} is the ruler of the galaxy!</h4>
-        </div>
-        <div class="row victory-player">
-          <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-default">
-              <div class="panel-heading enemy-name-container">
-                <h3 class="panel-title enemy-name">{{hero.name}}</h3>
-              </div>
-              <div class="panel-body">
-                <div class="enemy-image">
-                  <img src="{{enemy.avatar}}" alt="">
+      <div class="row">
+        <img class="battle-logo center-block" src="images/main-logo.png" alt="">
+      </div>
+      <div class="row">
+        <div class="col-md-12 loss-screen-container">
+          <div class="row loss-heading">
+            <h2>Sorry {{hero.name}}, you have been defeated!</h2>
+            <h4>{{enemy.name}} is the ruler of the galaxy!</h4>
+          </div>
+          <div class="row victory-player">
+            <div class="col-md-6 col-md-offset-3">
+              <div class="panel panel-default">
+                <div class="panel-heading enemy-name-container">
+                  <h3 class="panel-title enemy-name">{{hero.name}}</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="enemy-image">
+                    <img src="{{enemy.avatar}}" alt="">
+                  </div>
                 </div>
               </div>
+            <button type="button" class="btn btn-lg btn-block main-menu-button">Main Menu</button>
             </div>
-          <button type="button" class="btn btn-lg btn-block main-menu-button">Main Menu</button>
           </div>
         </div>
       </div>
@@ -274,24 +289,29 @@
   VICTORY SCREEN TEMPLATE
 -->
     <script id="victory-screen-template" type="text/x-handlebars-template">
-      <div class="col-md-12 victory-screen-container">
-        <div class="row victory-heading">
-          <h2>Congrats {{hero.name}}, you win!</h2>
-          <h4>Take that {{enemy.name}}!</h4>
-        </div>
-        <div class="row victory-player">
-          <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-default">
-              <div class="panel-heading hero-name-container">
-                <h3 class="panel-title hero-name">{{hero.name}}</h3>
-              </div>
-              <div class="panel-body">
-                <div class="hero-image">
-                  <img src="{{hero.avatar}}" alt="">
+      <div class="row">
+        <img class="battle-logo center-block" src="images/main-logo.png" alt="">
+      </div>
+      <div class="row">
+        <div class="col-md-12 victory-screen-container">
+          <div class="row victory-heading">
+            <h2>Congrats {{hero.name}}, you win!</h2>
+            <h4>Take that {{enemy.name}}!</h4>
+          </div>
+          <div class="row victory-player">
+            <div class="col-md-6 col-md-offset-3">
+              <div class="panel panel-default">
+                <div class="panel-heading hero-name-container">
+                  <h3 class="panel-title hero-name">{{hero.name}}</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="hero-image">
+                    <img src="{{hero.avatar}}" alt="">
+                  </div>
                 </div>
               </div>
+            <button type="button" class="btn btn-lg btn-block main-menu-button">Main Menu</button>
             </div>
-          <button type="button" class="btn btn-lg btn-block main-menu-button">Main Menu</button>
           </div>
         </div>
       </div>

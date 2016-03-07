@@ -14,14 +14,33 @@ function Enemy(params){
 
 // HEROES
 
-Hero.prototype.calculateDamage = function(enemy){ //make this a method on both prototypes
+Hero.prototype.calculateDamage = function(character){ //make this a method on both prototypes
   var attackPower = (this.power)/50; //gets players attack power multiplier
-  var currentEnemyHealth = function(enemy){
-    return enemy.hp;
+  var currentEnemyHealth = function(character){
+    return character.hp;
   };
   this.currentDamage = Math.floor(_.random(1, 10) * attackPower); //calculates damage based on power
-  enemy.hp = (currentEnemyHealth(enemy) - this.currentDamage); //sets hp to last hp minus damage
-  return enemy.hp;
+  character.hp = (currentEnemyHealth(character) - this.currentDamage); //sets hp to last hp minus damage
+  return character.hp;
+};
+
+Hero.prototype.boostDamage = function(character){ //make this a method on both prototypes
+  var attackPower = (this.power)/25; //on boost the attack number could be twice as high
+  var currentEnemyHealth = function(character){
+    return character.hp;
+  };
+  this.boostDamageAmount = Math.floor(_.random(1, 10) * attackPower); //calculates damage based on power
+  character.hp = (currentEnemyHealth(character) - this.boostDamageAmount); //sets hp to last hp minus damage
+  return character.hp;
+};
+
+Hero.prototype.boostHpCalculate = function(){ //make this a method on both prototypes
+  var newHp = Math.floor(((this.boostHp)/(_.random(1, 5)))); //gets boost amount based on random number and prop
+  this.hp = this.hp + newHp; //adds to current hp
+  if(this.hp > 100){ //caps at 100
+    this.hp = 100;
+  }
+  return this.hp; //returns to be displayed
 };
 
 Hero.prototype.isDead = function(){
@@ -32,25 +51,6 @@ Hero.prototype.isDead = function(){
   }
 };
 
-Hero.prototype.specialAttack = function(enemy){
-  console.log("before", this.power);
-  this.power = this.power * (100/this.boostPower);
-  var currentEnemyHealth = function(enemy){
-    return enemy.hp;
-  };
-  this.currentDamage = Math.floor(_.random(1, 10) * (this.power/75)); //calculates damage based on power
-  console.log("after", this.power);
-  enemy.hp = (currentEnemyHealth(enemy) - this.currentDamage); //sets hp to last hp minus damage
-
-  return enemy.hp;
-};
-
-Hero.prototype.healthBoost = function(character){
-  character.hp = character.hp * (100/character.boostHp);
-  character.boostHp = false;
-  return character.hp;
-};
-
 var heroes = {
     "ObiWanKenobi": new Hero ({
       name: "Obi Wan Kenobi",
@@ -58,7 +58,7 @@ var heroes = {
       hp: 100,
       avatar: "images/obi.png",
       power: _.random(95,100),
-      boostPower:  50,
+      boostPower: 75,
       boostHp: 70
     }),
     "PoeDameron": new Hero ({
@@ -92,14 +92,33 @@ var heroes = {
 
 // ENEMIES
 
-Enemy.prototype.calculateDamage = function(hero){ //make this a method on both prototypes
-  var attackPower = (this.power)/50;
-  var currentHeroHealth = function(hero){
-    return hero.hp;
+Enemy.prototype.calculateDamage = function(character){ //make this a method on both prototypes
+  var attackPower = (this.power)/50; //power must be calculated so it is displayed properly on bar
+  var currentHeroHealth = function(character){
+    return character.hp;
   };
-  this.currentDamage = Math.floor(_.random(1, 10) * attackPower);
-  hero.hp = (currentHeroHealth(hero) - this.currentDamage);
-  return hero.hp;
+  this.currentDamage = Math.floor(_.random(1, 10) * attackPower); //calculated on random number and prop
+  character.hp = (currentHeroHealth(character) - this.currentDamage); //subtracted from health
+  return character.hp; //returned for display
+};
+
+Enemy.prototype.boostDamage = function(character){ //make this a method on both prototypes
+  var attackPower = (this.power)/25; //gets players attack power multiplier
+  var currentEnemyHealth = function(character){
+    return character.hp;
+  };
+  this.boostDamageAmount = Math.floor(_.random(1, 10) * attackPower); //calculates damage based on power
+  character.hp = (currentEnemyHealth(character) - this.boostDamageAmount); //sets hp to last hp minus damage
+  return character.hp;
+};
+
+Enemy.prototype.boostHpCalculate = function(){ //make this a method on both prototypes
+  var newHp = Math.floor(((this.boostHp)/(_.random(1, 5)))); //gets boost amount based on random number and prop
+  this.hp = this.hp + newHp; //adds to current hp
+  if(this.hp > 100){ //caps at 100
+    this.hp = 100;
+  }
+  return this.hp; //returns to be displayed
 };
 
 Enemy.prototype.isDead = function(){ // checks if character is dead by checking if hp is at 0
@@ -108,25 +127,6 @@ Enemy.prototype.isDead = function(){ // checks if character is dead by checking 
   } else {
     return true;
   }
-};
-
-Enemy.prototype.specialAttack = function(character){
-  console.log("before", this.power);
-  this.power = this.power * (100/this.boostPower);
-  var currentEnemyHealth = function(character){
-    return character.hp;
-  };
-  this.currentDamage = Math.floor(_.random(1, 10) * (this.power/75)); //calculates damage based on power
-  console.log("after", this.power);
-  character.hp = (currentEnemyHealth(enemy) - this.currentDamage); //sets hp to last hp minus damage
-
-  return character.hp;
-};
-
-Enemy.prototype.healthBoost = function(character){
-  character.hp = character.hp * (100/character.boostHp);
-  character.boostHp = false;
-  return character.hp;
 };
 
 var enemies = {
