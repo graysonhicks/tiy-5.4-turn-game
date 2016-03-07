@@ -154,13 +154,13 @@ var enemies = {
       hp: _.random(70, 90),
       avatar: "images/trooper.png",
       power: _.random(70, 80),
-      boostPower:  35,
-      boostHp: 25
+      boostPower:  45,
+      boostHp: 35
     }),
     "JabbatheHut": new Enemy({
       name: "Jabba the Hut",
       id: "JabbatheHut",
-      hp: _.random(50, 80),
+      hp: _.random(60, 80),
       avatar: "images/jabba.png",
       power: _.random(60, 75),
       boostPower:  100,
